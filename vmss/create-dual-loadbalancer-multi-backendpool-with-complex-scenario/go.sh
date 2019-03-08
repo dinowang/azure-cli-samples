@@ -1,5 +1,5 @@
 #!/bin/bash
-codename=a016
+codename=a018
 
 resourceGroup=$codename-rg
 location=southeastasia
@@ -9,7 +9,7 @@ nsg=$codename-nsg
 internalLb=$codename-lb-internal
 publicLb=$codename-lb
 publicLbIp=$codename-lb-ip
-sku=Standard
+sku=Basic
 backendPool=$codename-pool
 backendAsPool=$codename-as-pool
 
@@ -160,11 +160,11 @@ az vmss create \
     --backend-pool-name $backendPool \
     --output table
 
-backendPoolId="$(az network lb address-pool show --resource-group $resourceGroup --lb-name $internalLb --name $backendPool --query id | sed -e 's/^"//' -e 's/"$//')"
-json=$(printf '{"resourceGroup":"%s","id":"%s"}' "$resourceGroup" "$backendPoolId")
-
 echo "Hacking VMSS NIC configuration ..."
 # 更新 VMSS 的 NIC 設定，支援多個 Load Balancer 的 Backend Pool
+
+backendPoolId="$(az network lb address-pool show --resource-group $resourceGroup --lb-name $internalLb --name $backendPool --query id | sed -e 's/^"//' -e 's/"$//')"
+json=$(printf '{"resourceGroup":"%s","id":"%s"}' "$resourceGroup" "$backendPoolId")
 
 az vmss update \
     --resource-group $resourceGroup \
