@@ -1,5 +1,5 @@
 #!/bin/bash
-codename=a018
+codename=a20190310
 
 resourceGroup=$codename-rg
 location=southeastasia
@@ -7,7 +7,7 @@ vnet=$codename-vnet
 nsg=$codename-nsg
 
 internalLb=$codename-lb-internal
-publicLb=$codename-lb
+publicLb=$codename-lb-public
 publicLbIp=$codename-lb-ip
 sku=Basic
 backendPool=$codename-pool
